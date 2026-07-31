@@ -1,1 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mangá Story</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
 
+        body {
+            background-color: #121214;
+            color: #FFFFFF;
+            padding-bottom: 40px;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background-color: #1a1a1e;
+            border-bottom: 1px solid #2a2a30;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #FF5555;
+            text-decoration: none;
+        }
+
+        .brand-logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .user-actions .icon-btn {
+            background: none;
+            border: none;
+            color: #E1E1E6;
+            font-size: 1.2rem;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .user-actions .icon-btn:hover {
+            color: #FF5555;
+        }
+
+        .badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background-color: #FF5555;
+            color: #FFF;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* Barra de Busca Topo */
+        .search-container {
+            flex: 1;
+            max-width: 450px;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            background-color: #202024;
+            border: 1px solid #29292e;
+            border-radius: 20px;
+            color: #FFF;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .search-container input:focus {
+            border-color: #FF5555;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7c7c8a;
+        }
+
+        /* Container Principal */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #202024 0%, #0d0d0f 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+            border: 1px solid #29292e;
+        }
+
+        .hero-text h1 {
+            font-size: 1.8rem;
+            color: #FFF;
+            margin-bottom: 8px;
+        }
+
+        .hero-text p {
+            color: #A8A8B3;
+            font-size: 0.95rem;
+        }
+
+        /* Seção Continuar Lendo */
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .continue-reading {
+            background-color: #202024;
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            border-left: 4px solid #FF5555;
+        }
+
+        .continue-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .continue-info img {
+            width: 45px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        /* Grid de Mangás */
+        .manga-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        .manga-card {
+            background-color: #202024;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #29292e;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .manga-card:hover {
+            transform: translateY(-4px);
+            border-color: #FF5555;
+        }
+
+        .manga-card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+        }
+
+        .manga-content {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .manga-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #FFF;
+        }
+
+        .manga-price {
+            color: #00E676;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 6px;
+        }
+
+        .btn-action {
+            margin-top: 10px;
+            background-color: #FF5555;
+            color: #FFF;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-action:hover {
+            background-color: #E50914;
+        }
+
+        /* Modal / Pop-up de Leitura */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #202024;
+            padding: 24px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid #FF5555;
+        }
+
+        .close-btn {
+            background: #323238;
+            color: #FFF;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            margin-top: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-navbar">
+        <a href="#" class="brand-logo">
+            <img src="https://i.postimg.cc/yxSXbMRx/5082267095011883761.jpg" alt="Logo">
+            <span>Mangá Story</span>
+        </a>
+
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Buscar mangá...">
+        </div>
+
+        <div class="user-actions">
+            <button class="icon-btn" onclick="alert('Histórico de leitura limpo!')" title="Histórico">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </button>
+            <button class="icon-btn" id="cartBtn" title="Carrinho">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="badge" id="cartCount">0</span>
+            </button>
+            <button class="icon-btn" onclick="alert('Perfil de Usuário')" title="Perfil">
+                <i class="fa-solid fa-circle-user"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero-banner">
+            <div class="hero-text">
+                <h1>Sua Jornada Otaku Começa Aqui!</h1>
+                <p>Por: Isabely • Selecione e leia seus mangás favoritos.</p>
+            </div>
+        </div>
+
+        <h3 class="section-title"><i class="fa-solid fa-book-open" style="color: #FF5555;"></i> Continuar Lendo</h3>
+        <div class="continue-reading">
+            <div class="continue-info">
+                <img src="https://i.postimg.cc/yxSXbMRx/5082267095011883761.jpg" alt="Jujutsu Kaisen">
+                <div>
+                    <h4>Jujutsu Kaisen</h4>
+                    <p style="color:#A8A8B3; font-size: 0.85rem;">Vol. 3, Cap. 24</p>
+                </div>
+            </div>
+            <button class="btn-action" style="width: auto; padding: 8px 16px;" onclick="openReader('Jujutsu Kaisen - Cap. 24')">Ler Agora</button>
+        </div>
+
+        <h3 class="section-title"><i class="fa-solid fa-fire" style="color: #FF5555;"></i> Catálogo de Mangás</h3>
+        <div class="manga-grid" id="mangaGrid">
+            
+            <div class="manga-card" data-title="naruto">
+                <img src="https://via.placeholder.com/160x210/202024/FFFFFF?text=Naruto" alt="Naruto">
+                <div class="manga-content">
+                    <div class="manga-title">Naruto Vol. 1</div>
+                    <div class="manga-price">R$ 29,90</div>
+                    <button class="btn-action" onclick="addToCart('Naruto Vol. 1')">Comprar</button>
+                </div>
+            </div>
+
+            <div class="manga-card" data-title="one piece">
+                <img src="https://via.placeholder.com/160x210/202024/FFFFFF?text=One+Piece" alt="One Piece">
+                <div class="manga-content">
+                    <div class="manga-title">One Piece Vol. 108</div>
+                    <div class="manga-price">R$ 34,90</div>
+                    <button class="btn-action" onclick="addToCart('One Piece Vol. 108')">Comprar</button>
+                </div>
+            </div>
+
+            <div class="manga-card" data-title="attack on titan">
+                <img src="https://via.placeholder.com/160x210/202024/FFFFFF?text=Attack+on+Titan" alt="Attack on Titan">
+                <div class="manga-content">
+                    <div class="manga-title">Attack on Titan Vol. 34</div>
+                    <div class="manga-price">R$ 31,90</div>
+                    <button class="btn-action" onclick="addToCart('Attack on Titan Vol. 34')">Comprar</button>
+                </div>
+            </div>
+
+            <div class="manga-card" data-title="jujutsu kaisen">
+                <img src="https://via.placeholder.com/160x210/202024/FFFFFF?text=Jujutsu+Kaisen" alt="Jujutsu Kaisen">
+                <div class="manga-content">
+                    <div class="manga-title">Jujutsu Kaisen Vol. 25</div>
+                    <div class="manga-price">R$ 34,90</div>
+                    <button class="btn-action" onclick="addToCart('Jujutsu Kaisen Vol. 25')">Comprar</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="modal" id="readerModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Leitor de Mangá</h3>
+            <p style="margin-top: 10px; color: #A8A8B3;">Carregando páginas do capítulo...</p>
+            <button class="close-btn" onclick="closeReader()">Fechar Leitor</button>
+        </div>
+    </div>
+
+    <script>
+        let cartItems = 0;
+
+        // Função para adicionar itens ao carrinho
+        function addToCart(title) {
+            cartItems++;
+            document.getElementById('cartCount').innerText = cartItems;
+            alert(title + ' foi adicionado ao seu carrinho!');
+        }
+
+        // Função para abrir o leitor
+        function openReader(mangaName) {
+            document.getElementById('modalTitle').innerText = 'Lendo: ' + mangaName;
+            document.getElementById('readerModal').style.display = 'flex';
+        }
+
+        // Função para fechar o leitor
+        function closeReader() {
+            document.getElementById('readerModal').style.display = 'none';
+        }
+
+        // Filtro da Barra de Pesquisa em Tempo Real
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.manga-card');
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title');
+                if (title.includes(term)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
